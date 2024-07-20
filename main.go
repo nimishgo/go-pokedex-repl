@@ -1,8 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"time"
+
+	"github.com/nimishgo/go-pokedex-repl/internal/pokeapi"
+)
+
+type config struct {
+	pokeApiClient       pokeapi.Client
+	nextLocationAreaURL *string
+	prevLocationAreaURL *string
+}
 
 func main() {
-	fmt.Println("Hello world")
-	return
+	cfg := config{
+		pokeApiClient: pokeapi.NewClient(time.Hour),
+	}
+	for {
+		startRepl(&cfg)
+	}
 }
