@@ -17,8 +17,8 @@ func callbackExplore(c *config, args ...string) error {
 		// log fatal exit the console with code 1
 		fmt.Errorf("%s", err)
 	}
-
-	fmt.Printf("Pokemon in %s\n", locationArea.Name)
+	fmt.Printf("Exploring %s ...\n", locationArea.Name)
+	fmt.Printf("Found Pokemon in %s\n", locationArea.Name)
 	for _, pokemon := range locationArea.PokemonEncounters {
 		fmt.Printf(" ~ %s\n", pokemon.Pokemon.Name)
 	}
