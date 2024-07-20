@@ -19,13 +19,19 @@ func startRepl(c *config) {
 			continue
 		}
 		command := cleaned[0]
+		args := []string{}
+
+		if len(cleaned) > 1 {
+			args = cleaned[1:]
+		}
+
 		getCommand := getCommands()
 		cmd, ok := getCommand[command]
 		if !ok {
 			fmt.Println("invalid command")
 			continue
 		}
-		err := cmd.callback(c)
+		err := cmd.callback(c, args...)
 		if err != nil {
 			fmt.Printf("%s", err)
 		}
@@ -35,7 +41,7 @@ func startRepl(c *config) {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -59,6 +65,11 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Turn off the pokedex",
 			callback:    callBackExit,
+		},
+		"explore": {
+			name:        "explore",
+			description: "lists pokemon in location area",
+			callback:    callbackExplore,
 		},
 	}
 
